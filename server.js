@@ -1,3 +1,4 @@
+//our server
 const express = require('express');
 const logger = require('./middleware/logger');
 const authorize = require('./middleware/auth');
@@ -13,6 +14,7 @@ app.get('/', authorize(['admin']), (req, res) => {
         error: null
     });
 });
+// every request to /api/profiles is sent to profiles.routes.js
 app.use('/api/profiles', profilesRoutes);
 
 app.listen(port, () => {

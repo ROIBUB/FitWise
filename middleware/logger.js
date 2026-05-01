@@ -1,3 +1,4 @@
+// after each request we print a log
 const logger = (req, res, next) => {
 
     res.on('finish', () => {

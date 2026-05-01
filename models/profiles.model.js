@@ -1,3 +1,4 @@
+// Array of profiles
 let profilesModel = [
     {
         userid: 1,
@@ -17,3 +18,4 @@ let profilesModel = [
 ];
 
 module.exports = profilesModel;
+// postman -> server -> route -> controller -> model -> data -> response

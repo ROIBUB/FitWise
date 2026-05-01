@@ -1,3 +1,4 @@
+// we check for validation of the user
 const authorize = (allowedRoles) => {
     return (req, res, next) => {
 
