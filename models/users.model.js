@@ -1,5 +1,5 @@
-// Array of profiles
-let profilesModel = [
+// Array of users
+let usersModel = [
     {
         userid: 1,
         firstName: 'John',
@@ -17,5 +17,5 @@ let profilesModel = [
     }
 ];
 
-module.exports = profilesModel;
+module.exports = usersModel;
 // postman -> server -> route -> controller -> model -> data -> response
