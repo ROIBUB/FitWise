@@ -63,7 +63,7 @@ const createUser = (req, res) => {
         ? usersController[usersController.length - 1].userid + 1
         : 1;
 
-    // יצירת פרופיל חדש
+    // we create the new user with the new id
     const newUser = {userid: newId, firstName, lastName, userRole, age,
         gender, height, weight, activityLevel, fitnessGoal, preferences,
         createDate: new Date(), updateDate: new Date()
@@ -79,9 +79,72 @@ const createUser = (req, res) => {
         error: null
     });
 };
+// a function to update user's details
+const updateUser = (req, res) => {
+    // we get the user id as a string and convert it to a int
+    const id = parseInt(req.params.id);
+    // we search the user in the mock DB
+    const user = usersController.find(u => u.userid === id);
+
+    // if user is not found
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            data: null,
+            error: {
+                code: "NOT_FOUND",
+                message: "User not found",
+                details: {}
+            }
+        });
+    }
+    // we get the data that the user sent
+    const { firstName, lastName, userRole, age, gender, height,
+        weight, activityLevel, fitnessGoal, preferences } = req.body;
+
+    // we do a validation for the data
+    const requiredFields = ["firstName", "lastName", "userRole",
+        "age", "gender", "height", "weight", "activityLevel", "fitnessGoal"];
+    // if something isn't vaild
+    for (let field of requiredFields) {
+        if (!req.body[field]) {
+            return res.status(400).json({
+                success: false,
+                data: null,
+                error: {
+                    code: "VALIDATION_ERROR",
+                    message: `Missing required field: ${field}`,
+                    details: {
+                        field: field
+                    }
+                }
+            });
+        }
+    }
+
+    // we update the user data
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.userRole = userRole;
+    user.age = age;
+    user.gender = gender;
+    user.height = height;
+    user.weight = weight;
+    user.activityLevel = activityLevel;
+    user.fitnessGoal = fitnessGoal;
+    user.preferences = preferences;
+    user.updateDate = new Date();
+    // return success status
+    res.status(200).json({
+        success: true,
+        data: user,
+        error: null
+    });
+};
 // we export those function so other files can use them
 module.exports = {
     getAllUsers,
     getUserById,
-    createUser
+    createUser,
+    updateUser,
 };
